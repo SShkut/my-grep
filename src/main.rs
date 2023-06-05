@@ -16,9 +16,8 @@ struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Input {
-    FileArg {
-        file_name: String,
-    },
+    #[command(short_flag = 'f', arg_required_else_help = true)]
+    File { file_name: String },
 }
 
 fn process_lines<T: BufRead + Sized>(reader: T, search_pattern: &str) {
@@ -38,7 +37,7 @@ fn main() {
     let args = Cli::parse();
 
     match &args.input {
-        Some(Input::FileArg { file_name }) => find_in_file(&file_name, &args.search_pattern),
+        Some(Input::File { file_name }) => find_in_file(&file_name, &args.search_pattern),
         None => find_in_std_in(&args.search_pattern),
     }
 }
@@ -60,4 +59,3 @@ fn find_in_std_in(search_pattern: &str) {
 
     process_lines(reader, &search_pattern)
 }
-
