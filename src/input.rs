@@ -29,7 +29,7 @@ pub fn process_lines<T: BufRead + Sized>(reader: T, search_pattern: &str) {
         };
         let contains_pattern = line.contains(&search_pattern);
         if contains_pattern {
-            println!("{}, {}", line_number + 1, line);
+            println!("{}: {}", line_number + 1, line);
         }
     }
 }
